@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block title %}<title>Google Login</title>{% endblock %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}" />
+
   </head>
   <body>
+    {% include 'app/navbar.html' %}
     {% block content %}
     <main>                            
     </main>

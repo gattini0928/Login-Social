@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load socialaccount %}
+{%  block css %} 
+    <link rel="stylesheet" href="{% static 'css/criar_conta.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-form">
+        <h2>Registrar</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="inputs-labels">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome Completo">
+            </div>
+            <div class="inputs-labels">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email"  placeholder="E-mail">
+            </div>
+            <div class="inputs-labels">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Senha">
+            </div>
+            <div class="inputs-labels">
+                <label for="senha2">Cofirmar Senha</label>
+                <input type="password" id="senha2" name="senha2" placeholder="Confirmar Senha">
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+            <h2>Criar conta com o Google</h2>
+            <a href="{% provider_login_url 'google' %}">        
+                <img
+                src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+                alt="Criar conta com o Google"
+              /></a>
+    </div>
+{% endblock %}

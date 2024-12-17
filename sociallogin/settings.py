@@ -107,12 +107,22 @@ SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+                'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
         'APP': {
             'client_id': os.getenv('CLIENT_ID'),
             'secret': os.getenv('SECRET'),
         }
     }
 }
+
+print(os.getenv('CLIENT_ID'))
+print(os.getenv('SECRET'))
 
 LANGUAGE_CODE = 'en-us'
 
@@ -128,7 +138,10 @@ STATICFILES_DIR = [
 ]
 
 LOGIN_URL = 'fazer_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+SOCIALACCOUNT_LOGIN_ON_GET = True
