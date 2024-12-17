@@ -7,4 +7,5 @@ urlpatterns = [
     path('criarconta/', criar_conta, name='criar_conta'),
     path('perfil/', perfil, name='perfil'),
     path('logout/', fazer_logout, name='fazer_logout'),
+    path('definir-username/', definir_username, name='definir_username'),
 ]

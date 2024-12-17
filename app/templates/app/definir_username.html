@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{%  block css %} 
+    <link rel="stylesheet" href="{% static 'css/definir_username.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Escolha um nome de usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+{% endblock %}

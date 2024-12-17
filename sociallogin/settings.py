@@ -8,7 +8,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'app/templates')
 
-SECRET_KEY = 'django-insecure-&j&_yjiq#3(8(bx-np2)&-=5bmdl^d!uxa@f+(=mramek6(l&5'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 DEBUG = True
 
@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'app.middleware.UsernameRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'sociallogin.urls'
@@ -121,9 +122,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-print(os.getenv('CLIENT_ID'))
-print(os.getenv('SECRET'))
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -138,10 +136,10 @@ STATICFILES_DIR = [
 ]
 
 LOGIN_URL = 'fazer_login'
+LOGIN_REDIRECT_URL =  '/definir-username/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
-SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
 SOCIALACCOUNT_LOGIN_ON_GET = True
