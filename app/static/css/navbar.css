@@ -21,7 +21,12 @@ h1 {
     font-size: 3.2rem;
 }
 
-
+.brand {
+    font-size: 3.2rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
 
 .a-nav {
     text-decoration: none;

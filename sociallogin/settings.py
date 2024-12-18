@@ -137,7 +137,7 @@ STATICFILES_DIR = [
 
 LOGIN_URL = 'fazer_login'
 LOGIN_REDIRECT_URL =  '/definir-username/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'fazer_login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

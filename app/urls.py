@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('perfil/', perfil, name='perfil'),
     path('logout/', fazer_logout, name='fazer_logout'),
     path('definir-username/', definir_username, name='definir_username'),
+    path('accounts/', include('allauth.urls')),
 ]

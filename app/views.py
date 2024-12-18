@@ -3,15 +3,11 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from .models import Perfil
-
-User = get_user_model()
-
 
 def homepage(request):
     return render(request, 'app/homepage.html')
-
 
 def fazer_login(request):
     if request.method == 'POST':
@@ -23,7 +19,7 @@ def fazer_login(request):
             user = authenticate(
                 request, username=user.username, password=senha)
             if user:
-                login(request, user)
+                login(request, user,backend='django.contrib.auth.backends.ModelBackend')
                 messages.success(request, f"Bem-vindo {user.username}")
                 return redirect('homepage')
 
@@ -31,32 +27,38 @@ def fazer_login(request):
         return redirect('fazer_login')
     return render(request, 'app/login.html')
 
-
 def criar_conta(request):
     if request.method == 'POST':
+        dados = request.POST.dict()
+        print(dados)
         nome = request.POST.get('nome')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
+        senha2 = request.POST.get('senha2')
 
+        if senha2 != senha:
+            messages.error(request, 'As senhas digitadas não são iguais')
+            return render(request, 'app/criar_conta.html')
+        
         if User.objects.filter(email=email).exists():
             messages.error(request, f'E-mail já registrado, faça login.')
-            return render(request, 'app/criar_conta.html', {'erro': 'Este e-mail já esta em uso'})
+            return render(request, 'app/criar_conta.html')
 
-        user = User.objects.create(username=None, email=email)
+        username = email.split('@')[0]
+        user = User.objects.create(username=username, email=email)
         user.set_password(senha)
         user.save()
 
         perfil = Perfil.objects.create(user=user, nome=nome)
         perfil.save()
-        messages.success(request, f'Conta {perfil.email} criado com sucesso.')
-        login(request, user)
+        messages.success(request, f'Conta {user.email} criado com sucesso.')
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('definir_username')
     return render(request, 'app/criar_conta.html')
 
 
 def perfil(request):
     return render(request, 'app/perfil.html')
-
 
 @login_required
 def definir_username(request):
@@ -76,8 +78,7 @@ def definir_username(request):
         return redirect('homepage')
     return render(request, 'app/definir_username.html')
 
-
 @login_required
 def fazer_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('fazer_login')
